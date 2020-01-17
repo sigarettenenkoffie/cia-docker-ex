@@ -1,0 +1,16 @@
+﻿@using Shop.Lib.Entities
+@model List<Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div>
+    <h1 class="display-4">Products</h1>
+    <ul>
+        @foreach (Product product in Model)
+        {
+            <li><a href="https://localhost:44397/Home/Index/?productName=@product.Name" target="_blank">@product.Name</a> (€ @product.Price)</li>
+        }
+    </ul>
+</div>
