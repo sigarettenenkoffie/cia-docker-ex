@@ -1,0 +1,16 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as build-env
+WORKDIR /product
+
+COPY ProductChoice.Web/*.csproj .
+COPY Shop.Lib/*.csproj .
+
+RUN dotnet restore ProductChoice.Web.csproj
+RUN dotnet restore Shop.Lib.csproj
+
+COPY ProductChoice.Web/. .
+COPY Shop.Lib/. .
+
+RUN dotnet publish ProductChoice.Web.csproj -o publish
+WORKDIR /publish
+ENTRYPOINT [ "dotnet"]
+CMD ["/product/publish/ProductChoice.Web.dll"]

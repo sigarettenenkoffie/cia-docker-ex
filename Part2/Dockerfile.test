@@ -1,0 +1,16 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as build-env
+WORKDIR /test
+
+COPY Shop.Test/*.csproj .
+COPY Shop.Lib/*.csproj .
+
+RUN dotnet restore Shop.Test.csproj
+RUN dotnet restore Shop.Lib.csproj
+
+COPY Shop.Test/. .
+COPY Shop.Lib/. .
+
+RUN dotnet publish Shop.Test.csproj -o publish
+WORKDIR /publish
+ENTRYPOINT [ "dotnet"]
+CMD ["/test/publish/Shop.Test.dll"]
